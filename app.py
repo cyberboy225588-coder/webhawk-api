@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
-import os
-from webhawk_core import run_webhawk_scan
+from scanner import run_full_scan
 
 app = Flask(__name__)
 
@@ -17,15 +16,11 @@ def scan():
         return jsonify({"error": "URL is required"}), 400
 
     try:
-        report_paths = run_webhawk_scan(url)
+        report_paths = run_full_scan(url)
         return jsonify({
             "status": "completed",
             "target": url,
-            "reports": {
-                "json": report_paths["json"],
-                "html": report_paths["html"],
-                "pdf": report_paths["pdf"]
-            }
+            "reports": report_paths
         })
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
