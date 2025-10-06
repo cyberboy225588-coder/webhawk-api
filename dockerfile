@@ -11,6 +11,23 @@ RUN apt update && apt install -y \
     nmap \
     && apt clean
 
-# Install Playwright deps
+# Install Node.js for Playwright
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
-RUN apt install
+RUN apt install -y nodejs
+
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip3 install -r requirements.txt
+
+# Install Playwright browsers
+RUN npx playwright install-deps
+RUN npx playwright install chromium
+
+# Copy app
+COPY . .
+
+# Expose port
+EXPOSE 5000
+
+# Run app
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]

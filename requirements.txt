@@ -1,8 +1,8 @@
 Flask==3.0.2
 requests
 beautifulsoup4
-lxml
+lxml==4.9.3
 dnspython
 python-nmap
-playwright
+playwright==1.40.0
 gunicorn
