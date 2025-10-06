@@ -1,0 +1,8 @@
+Flask==3.0.2
+requests
+beautifulsoup4
+lxml
+dnspython
+python-nmap
+playwright
+gunicorn
